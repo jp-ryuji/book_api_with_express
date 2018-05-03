@@ -11,5 +11,9 @@
   "dependencies": {
     "chalk": "^2.4.1",
     "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-nodemon": "^2.2.1"
   }
 }
