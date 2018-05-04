@@ -2,9 +2,13 @@
 
 const express = require('express');
 const chalk = require('chalk');
+const bodyParser = require('body-parser');
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // Set up mongoose connection
 const mongoose = require('mongoose');
@@ -18,6 +22,11 @@ const Book = require('./models/bookModel');
 
 const bookRouter = express.Router();
 bookRouter.route('/books')
+  .post(function(req, res) {
+    let book = new Book(req.body);
+    book.save();
+    res.status(201).send(book);
+  })
   .get(function(req, res) {
     let query = {};
     if (req.query.genre) {
