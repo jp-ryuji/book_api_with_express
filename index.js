@@ -22,6 +22,11 @@ const Book = require('./models/bookModel');
 
 const bookRouter = express.Router();
 bookRouter.route('/books')
+  .post(function(req, res) {
+    let book = new Book(req.body);
+    book.save();
+    res.status(201).send(book);
+  })
   .get(function(req, res) {
     let query = {};
     if (req.query.genre) {
