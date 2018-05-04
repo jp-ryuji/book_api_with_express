@@ -21,7 +21,7 @@ conn.on('error', console.error.bind(console, 'MongoDB connection error:'));
 const Book = require('./models/bookModel');
 const bookRouter = require('./routes/bookRoutes')(Book);
 
-app.use('/api', bookRouter);
+app.use('/api/books', bookRouter);
 
 app.get('/', function(req, res) {
   res.send('welcome to my API!');

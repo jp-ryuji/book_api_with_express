@@ -4,7 +4,7 @@ const express = require('express');
 const routes = function(Book) {
   const bookRouter = express.Router();
 
-  bookRouter.route('/books')
+  bookRouter.route('/')
     .post(function(req, res) {
       let book = new Book(req.body);
       book.save();
@@ -25,7 +25,7 @@ const routes = function(Book) {
       });
     });
 
-  bookRouter.route('/books/:bookId')
+  bookRouter.route('/:bookId')
     .get(function(req, res) {
       Book.findById(req.params.bookId, function(err, books) {
         if (err) {
