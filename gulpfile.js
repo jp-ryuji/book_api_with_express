@@ -3,6 +3,7 @@
 const gulp = require('gulp');
 const nodemon = require('gulp-nodemon');
 const chalk = require('chalk');
+const gulpMocha = require('gulp-mocha');
 
 gulp.task('default', function() {
   nodemon({
@@ -18,3 +19,7 @@ gulp.task('default', function() {
   });
 });
 
+gulp.task('test', function() {
+  gulp.src('tests/*.js', { read: false })
+      .pipe(gulpMocha({ reporter: 'nyan' }))
+})
