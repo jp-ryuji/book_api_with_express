@@ -23,7 +23,22 @@ const bookController = function(Book) {
       if (err) {
         res.status(500).send(err);
       } else {
-        res.json(books);
+        // let returnBooks = [];
+        // books.forEach(function(element, _index, _array) {
+        //   let newBook = element.toJSON();
+        //   newBook.links = {};
+        //   newBook.links.self = `http://${req.headers.host}/api/books/${newBook._id}`;
+        //   returnBooks.push(newBook);
+        // });
+        // res.json(returnBooks);
+
+        let returnBooks = books.map(function(element, _index, _array) {
+          let newBook = element.toJSON();
+          newBook.links = {};
+          newBook.links.self = `http://${req.headers.host}/api/books/${newBook._id}`;
+          return newBook;
+        });
+        res.json(returnBooks);
       }
     });
   }
