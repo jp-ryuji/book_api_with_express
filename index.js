@@ -12,10 +12,15 @@ app.use(bodyParser.json());
 
 // Set up mongoose connection
 const mongoose = require('mongoose');
-const db = 'mongodb://localhost/bookAPI';
+let db;
+if (process.env.ENV === 'Test') {
+  db = mongoose.connect('mongodb://localhost/bookAPI_test');
+} else {
+  db = mongoose.connect('mongodb://localhost/bookAPI');
+}
 mongoose.connect(db);
 mongoose.Promise = global.Promise;
-var conn = mongoose.connection;
+const conn = mongoose.connection;
 conn.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 const Book = require('./models/bookModel');
@@ -30,3 +35,5 @@ app.get('/', function(req, res) {
 app.listen(port, function () {
   console.log(chalk.green(`Server is up and running on port ${port}`));
 });
+
+module.exports = app;
