@@ -1,16 +1,16 @@
-'use strict';
-
 const express = require('express');
+
 const routes = function(Book) {
   const bookRouter = express.Router();
   const bookController = require('../controllers/bookController')(Book);
 
-  bookRouter.route('/')
+  bookRouter
+    .route('/')
     .post(bookController.post)
     .get(bookController.get);
 
-  bookRouter.use('/:bookId', function(req, res, next) {
-    Book.findById(req.params.bookId, function(err, book) {
+  bookRouter.use('/:bookId', (req, res, next) => {
+    Book.findById(req.params.bookId, (err, book) => {
       if (err) {
         res.status(500).send(err);
       } else if (book) {
@@ -21,20 +21,21 @@ const routes = function(Book) {
       }
     });
   });
-  bookRouter.route('/:bookId')
-    .get(function(req, res) {
-      let returnBook = req.book.toJSON();
+  bookRouter
+    .route('/:bookId')
+    .get((req, res) => {
+      const returnBook = req.book.toJSON();
       returnBook.links = {};
-      let newLink = `http://${req.headers.host}/api/books/?genre=${returnBook.genre}`;
+      const newLink = `http://${req.headers.host}/api/books/?genre=${returnBook.genre}`;
       returnBook.links.FilterByThisGenre = newLink.replace(' ', '%20');
       res.json(returnBook);
     })
-    .put(function(req, res) {
+    .put((req, res) => {
       req.book.title = req.body.title;
       req.book.author = req.body.author;
       req.book.genre = req.body.genre;
       req.book.read = req.body.read;
-      req.book.save(function(err) {
+      req.book.save(err => {
         if (err) {
           res.status(500).send(err);
         } else {
@@ -43,16 +44,16 @@ const routes = function(Book) {
       });
       res.json(req.book);
     })
-    .patch(function(req, res) {
+    .patch((req, res) => {
       if (req.body._id) {
         delete req.body._id;
       }
 
-      for (let p in req.body) {
+      for (const p in req.body) {
         req.book[p] = req.body[p];
       }
 
-      req.book.save(function(err) {
+      req.book.save(err => {
         if (err) {
           res.status(500).send(err);
         } else {
@@ -60,8 +61,8 @@ const routes = function(Book) {
         }
       });
     })
-    .delete(function(req, res) {
-      req.book.remove(function(err) {
+    .delete((req, res) => {
+      req.book.remove(err => {
         if (err) {
           res.status(500).send(err);
         } else {

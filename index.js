@@ -1,5 +1,3 @@
-'use strict';
-
 const express = require('express');
 const chalk = require('chalk');
 const bodyParser = require('body-parser');
@@ -12,6 +10,7 @@ app.use(bodyParser.json());
 
 // Set up mongoose connection
 const mongoose = require('mongoose');
+
 let db;
 if (process.env.ENV === 'Test') {
   db = mongoose.connect('mongodb://localhost/bookAPI_test');
@@ -28,11 +27,11 @@ const bookRouter = require('./routes/bookRoutes')(Book);
 
 app.use('/api/books', bookRouter);
 
-app.get('/', function(req, res) {
+app.get('/', (req, res) => {
   res.send('welcome to my API!');
 });
 
-app.listen(port, function () {
+app.listen(port, () => {
   console.log(chalk.green(`Server is up and running on port ${port}`));
 });
 
