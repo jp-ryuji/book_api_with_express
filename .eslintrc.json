@@ -1,0 +1,33 @@
+{
+  "root": true,
+  "env": {
+    "es6": true,
+    "node": true,
+    "jasmine": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2017,
+    "sourceType": "module"
+  },
+  "parser": "babel-eslint",
+  "extends": [
+    "airbnb",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": [
+    "prettier"
+  ],
+  "rules": {
+    "prettier/prettier": [2, {
+      "singleQuote": true,
+      "bracketSpacing": true,
+      "printWidth": 150
+    }],
+    "func-names": [2, "as-needed"],
+    "max-len": [2, { "code": 150, "ignoreComments": true }],
+    "no-console": 0,
+    "no-underscore-dangle": 0,
+    "no-unused-vars": [2, { "argsIgnorePattern": "^_" }],
+    "prefer-destructuring": [2, { "VariableDeclarator": { "object": true, "array": false }}]
+  }
+}

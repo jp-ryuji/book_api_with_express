@@ -1,8 +1,6 @@
-'use strict';
-
 const bookController = function(Book) {
   const post = function(req, res) {
-    let book = new Book(req.body);
+    const book = new Book(req.body);
     if (!req.body.title) {
       res.status(400);
       res.send('Title is required');
@@ -11,15 +9,15 @@ const bookController = function(Book) {
       res.status(201);
       res.send(book);
     }
-  }
+  };
 
   const get = function(req, res) {
-    let query = {};
+    const query = {};
     if (req.query.genre) {
       query.genre = req.query.genre;
     }
 
-    Book.find(query, function(err, books) {
+    Book.find(query, (err, books) => {
       if (err) {
         res.status(500).send(err);
       } else {
@@ -32,8 +30,8 @@ const bookController = function(Book) {
         // });
         // res.json(returnBooks);
 
-        let returnBooks = books.map(function(element, _index, _array) {
-          let newBook = element.toJSON();
+        const returnBooks = books.map((element, _index, _array) => {
+          const newBook = element.toJSON();
           newBook.links = {};
           newBook.links.self = `http://${req.headers.host}/api/books/${newBook._id}`;
           return newBook;
@@ -41,12 +39,12 @@ const bookController = function(Book) {
         res.json(returnBooks);
       }
     });
-  }
+  };
 
   return {
-    post: post,
-    get: get
-  }
-}
+    post,
+    get
+  };
+};
 
 module.exports = bookController;
